@@ -1,7 +1,4 @@
-export default {
-  reactStrictMode: true,
-  webpack(config) {
-    config.module.exprContextCritical = false; // Hapus peringatan yang tidak diperlukan
-    return config;
-  },
-};
+/** @type {import('next').NextConfig} */
+const nextConfig = {};
+
+export default nextConfig;
