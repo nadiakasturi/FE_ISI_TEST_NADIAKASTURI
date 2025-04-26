@@ -49,7 +49,7 @@ const Register = () => {
       }
 
       router.push('/login');  
-    } catch (err) {
+    } catch {
       setError('An error occurred during registration.');
     }
   };

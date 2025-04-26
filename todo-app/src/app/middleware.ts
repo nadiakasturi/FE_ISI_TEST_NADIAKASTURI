@@ -1,7 +1,20 @@
 import { NextResponse } from 'next/server';
-import { verifyToken } from '../../lib/auth'; 
+import { verifyToken } from '../../lib/auth';
+import { JwtPayload } from 'jsonwebtoken';  
 
-export async function middleware(req: Request) {
+
+interface Payload extends JwtPayload {
+  userId: string;
+  teamId: string | number;
+  role: string;
+}
+
+interface CustomRequest extends Request {
+  user?: Payload;
+  teamId?: string | number;
+}
+
+export async function middleware(req: CustomRequest) {
   const token = req.headers.get('Authorization')?.split(' ')[1];
 
   if (!token) {
@@ -9,20 +22,21 @@ export async function middleware(req: Request) {
   }
 
   try {
-    const payload = await verifyToken(token); 
+    const payload = await verifyToken(token);
 
     if (!payload) {
       return new NextResponse('Invalid token', { status: 401 });
     }
 
-    (req as any).user = payload; 
+    req.user = payload as Payload; 
+    req.teamId = payload.teamId;
 
-    (req as any).teamId = payload.teamId;
-
-
-    console.log('User in middleware:', (req as any).user); 
-
-  } catch (error) {
+    console.log('User in middleware:', req.user);
+  } catch (error: unknown) {
+  
+    if (error instanceof Error) {
+      console.error('Error verifying token:', error.message);
+    }
     return new NextResponse('Invalid token', { status: 401 });
   }
 
@@ -30,5 +44,5 @@ export async function middleware(req: Request) {
 }
 
 export const config = {
-  matcher: ['/api/tasks/*', '/api/users/*'], 
+  matcher: ['/api/tasks/*', '/api/users/*'],
 };

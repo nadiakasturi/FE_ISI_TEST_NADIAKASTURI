@@ -1,36 +1,36 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import Cookies from 'js-cookie';
-import { useRouter } from 'next/navigation';
+import { useState } from "react";
+import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
   const router = useRouter();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [errorMsg, setErrorMsg] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
 
   const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault(); 
-    setErrorMsg('');
+    e.preventDefault();
+    setErrorMsg("");
     try {
-      const res = await fetch('/api/login', {
-        method: 'POST',
+      const res = await fetch("/api/login", {
+        method: "POST",
         body: JSON.stringify({ email, password }),
-        headers: { 'Content-Type': 'application/json' },
+        headers: { "Content-Type": "application/json" },
       });
 
       const data = await res.json();
 
       if (res.ok) {
-        Cookies.set('token', data.token);
-        console.log('Token stored:', data.token);
-        router.push('/dashboard');
+        Cookies.set("token", data.token);
+        console.log("Token stored:", data.token);
+        router.push("/dashboard");
       } else {
         setErrorMsg(data.message);
       }
-    } catch (err) {
-      setErrorMsg('Something went wrong!');
+    } catch {
+      setErrorMsg("Something went wrong!");
     }
   };
 
@@ -40,7 +40,9 @@ export default function LoginPage() {
         onSubmit={handleLogin}
         className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full"
       >
-        <h1 className="text-2xl font-bold mb-6 text-center text-blue-700">Login</h1>
+        <h1 className="text-2xl font-bold mb-6 text-center text-blue-700">
+          Login
+        </h1>
 
         {errorMsg && (
           <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded mb-4 text-sm">
@@ -69,6 +71,15 @@ export default function LoginPage() {
           >
             Login
           </button>
+
+          <div className="mt-4 text-center">
+            <p className="text-sm">
+              Don't have an account?{" "}
+              <a href="/register" className="text-blue-500 hover:underline">
+                Register here
+              </a>
+            </p>
+          </div>
         </div>
       </form>
     </div>

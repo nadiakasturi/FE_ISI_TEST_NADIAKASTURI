@@ -1,12 +1,18 @@
 import { z } from 'zod';
 
-export default function errorHandler(error: any) {
-  let message = error.message || "Internal server error";
-  let status = error.status || "500";
+type CustomError = {
+  message?: string;
+  status?: number;
+  issues?: z.ZodIssue[]; 
+};
 
-  if (error instanceof z.ZodError) {
+export default function errorHandler(error: CustomError) {
+  let message = error.message || "Internal server error";
+  let status = error.status || 500; 
+
+  if (error.issues) {
     message = error.issues[0].message;
-    status = 400;
+    status = 400; 
   }
 
   return Response.json(

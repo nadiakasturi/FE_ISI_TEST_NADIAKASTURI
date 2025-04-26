@@ -92,8 +92,12 @@ export async function PUT(req: NextRequest, { params }: { params: { taskId: stri
 
     return NextResponse.json({ error: 'Unauthorized role' }, { status: 403 });
 
-  } catch (err: any) {
-    console.error('Update failed:', err);
+  } catch (err: unknown) { 
+    if (err instanceof Error) {
+      console.error('Update failed:', err.message);
+    } else {
+      console.error('Update failed: Unknown error');
+    }
     return NextResponse.json({ error: 'Server error' }, { status: 500 });
   }
 }

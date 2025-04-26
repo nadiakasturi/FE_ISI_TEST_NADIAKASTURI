@@ -15,7 +15,7 @@ type Task = {
 export default function Dashboard() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [role, setRole] = useState('');
-  const [userId, setUserId] = useState<string | null>(null);
+
   const [teamId, setTeamId] = useState<string | number | null>(null);
   const router = useRouter();
 
@@ -29,7 +29,7 @@ export default function Dashboard() {
 
     const decoded = JSON.parse(atob(token.split('.')[1]));
     setRole(decoded.role);
-    setUserId(decoded.userId);
+ 
     setTeamId(decoded.teamId);
 
     const fetchTasks = async () => {

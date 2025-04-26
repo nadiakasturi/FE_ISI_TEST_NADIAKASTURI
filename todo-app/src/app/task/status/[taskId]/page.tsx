@@ -1,8 +1,14 @@
-'use client';
+"use client"
 
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
+
+type Task = {
+  id: number;
+  status: string;
+  description: string;
+};
 
 export default function EditTaskStatusPage() {
   const { taskId } = useParams();
@@ -16,14 +22,15 @@ export default function EditTaskStatusPage() {
   useEffect(() => {
     const fetchTask = async () => {
       try {
-        const token = Cookies.get('token');
+        const token = Cookies.get('token'); 
         const res = await fetch(`/api/task`, {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`, 
           },
         });
-        const tasks = await res.json();
-        const task = tasks.find((t: any) => t.id === parseInt(taskId as string));
+        const tasks: Task[] = await res.json(); 
+        const task = tasks.find((t) => t.id === parseInt(taskId as string));
+
         if (!task) {
           setError('Task not found or not assigned to you.');
           return;
@@ -45,11 +52,12 @@ export default function EditTaskStatusPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const token = Cookies.get('token');
+      const token = Cookies.get('token'); 
       const res = await fetch(`/api/task/${taskId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ status, description }),
       });

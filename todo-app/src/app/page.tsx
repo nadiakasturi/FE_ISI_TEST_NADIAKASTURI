@@ -7,8 +7,8 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(() => {
-    router.replace("/register"); // Redirect otomatis ke /register
+    router.replace("/register"); 
   }, [router]);
 
-  return null; // Tidak ada tampilan di halaman utama
+  return null; 
 }
