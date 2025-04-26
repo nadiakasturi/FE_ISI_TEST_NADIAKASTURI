@@ -6,8 +6,9 @@ A Todo List Web App with role-based access (Lead & Team) using Next.js + Postgre
 - Next.js + TypeScript
 - TailwindCSS
 - PostgreSQL
-- Pg ORM
+- Prisma ORM
 - JWT Auth
+- DBeaver
 - Docker + Docker Compose
 
 ## Features

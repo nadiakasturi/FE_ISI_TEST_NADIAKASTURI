@@ -1,0 +1,30 @@
+version: '3'
+services:
+  web:
+    image: node:16
+    container_name: web
+    command: sh -c "npm install && npm run dev"
+    ports:
+      - "3000:3000"  # Aplikasi akan dapat diakses di localhost:3000
+    volumes:
+      - .:/app  # Mount proyek ke dalam container
+    working_dir: /app
+    environment:
+      - NEXT_PUBLIC_DB_URL=postgresql://postgres:postgres@db:5432/todolist?schema=public  # Gunakan db sebagai host
+    depends_on:
+      - db  # Pastikan web service berjalan setelah db siap
+
+  db:
+    image: postgres:13
+    container_name: db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: todolist  # Nama database
+    ports:
+      - "5432:5432"  # Expose port 5432 untuk akses ke PostgreSQL
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  # Data persistensinya akan disimpan di luar container
+
+volumes:
+  postgres_data:  # Definisikan volume untuk menyimpan data PostgreSQL secara persisten
