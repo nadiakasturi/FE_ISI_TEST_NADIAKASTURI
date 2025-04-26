@@ -51,3 +51,26 @@ export async function POST(req: NextRequest) {
 
   return NextResponse.json(task);
 }
+
+export async function GET(req: NextRequest) {
+  const token = req.headers.get('authorization')?.split(' ')[1];
+
+  if (!token) {
+    console.log('Token tidak ditemukan');
+    const tasks = await prisma.task.findMany();
+    return NextResponse.json(tasks);
+  }
+
+  const decoded = await verifyToken(token);
+
+  if (!decoded) {
+    console.log('Token tidak valid');
+    return NextResponse.json({ message: 'Invalid token' }, { status: 401 });
+  }
+
+  console.log('Decoded token:', decoded);
+
+  const tasks = await prisma.task.findMany();
+  
+  return NextResponse.json(tasks);
+}

@@ -1,17 +1,18 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 
 type Task = {
-  id: number;
+  id: string;
   title: string;
   description: string;
   status: string;
+  assignedToTeamId: string; 
 };
 
-export default function DashboardPage() {
+export default function Dashboard() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [role, setRole] = useState('');
   const router = useRouter();
@@ -24,46 +25,50 @@ export default function DashboardPage() {
       return;
     }
 
+    const decoded = JSON.parse(atob(token.split('.')[1]));
+    setRole(decoded.role);
+
     const fetchTasks = async () => {
-      try {
-        const res = await fetch('/api/tasks', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        if (!res.ok) {
-          router.push('/login');
-          return;
-        }
-
-        const data = await res.json();
-        setTasks(data.tasks);
-        setRole(data.role); 
-      } catch (err) {
-        console.error('Error fetching tasks:', err);
-        router.push('/login');
-      }
+      const res = await fetch('/api/task');
+      const data = await res.json();
+      setTasks(data);
     };
 
     fetchTasks();
   }, [router]);
 
+  const handleAddTask = () => {
+    router.push('/tasks/create');
+  };
+
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
+    <div className="p-6 bg-gray-50 min-h-screen">
+      <h1 className="text-3xl font-semibold mb-6 text-center text-gray-900">Dashboard</h1>
+      
       {role === 'Lead' && (
-        <button className="mb-4 px-4 py-2 bg-green-600 text-white rounded">Add Task</button>
+        <div className="flex justify-center mb-8">
+          <button
+            onClick={handleAddTask}
+            className="dashboard-button"
+          >
+            Add New Task
+          </button>
+        </div>
       )}
-      <ul>
-        {tasks.map((task) => (
-          <li key={task.id} className="border p-4 mb-2 rounded shadow">
-            <h3 className="font-bold">{task.title}</h3>
+
+      <div className="dashboard-grid">
+        {tasks.slice(0, 12).map((task) => (
+          <div
+            key={task.id}
+            className="dashboard-card"
+          >
+            <h3>{task.title}</h3>
             <p>{task.description}</p>
-            <p className="text-sm text-gray-600">Status: {task.status}</p>
-          </li>
+            <p className="status">Status: {task.status}</p>
+            <p className="assigned-to-team-id">Assigned To Team : {task.assignedToTeamId}</p> 
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 }
