@@ -19,8 +19,8 @@ export async function POST(req: NextRequest) {
     userId: user.id,
     email: user.email,
     role: user.role,
-    teamId: user.teamId, 
-    exp: Math.floor(Date.now() / 1000) + 60 * 60,
+    teamId: user.teamId,
+    exp: Math.floor(Date.now() / 1000) + 60 * 60, 
   });
 
   console.log('JWT Payload on login:', {
@@ -30,15 +30,8 @@ export async function POST(req: NextRequest) {
     teamId: user.teamId,
   });
 
-  const response = NextResponse.json({ message: 'Login success' });
-  response.cookies.set({
-    name: 'token',
-    value: token,
-    httpOnly: true,
-    path: '/',
-    secure: process.env.NODE_ENV === 'production',
-    maxAge: 60 * 60,
+  return NextResponse.json({
+    message: 'Login success',
+    token, 
   });
-
-  return response;
 }
