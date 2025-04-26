@@ -106,55 +106,53 @@ h1 {
   }
 }
 
-/* globals.css atau style.css */
-
 .dashboard-grid {
   display: grid;
-  grid-template-columns: repeat(6, 1fr); /* 6 kolom */
-  grid-template-rows: auto; /* Baris otomatis menyesuaikan jumlah card */
-  gap: 1.5rem; /* Jarak antar card */
-  max-width: 100%; /* Maksimal lebar grid */
-  padding: 1rem; /* Padding grid */
-  margin-top: 2rem; /* Jarak atas */
+  grid-template-columns: repeat(6, 1fr); 
+  grid-template-rows: auto; 
+  gap: 1.5rem; 
+  max-width: 100%; 
+  padding: 1rem;
+  margin-top: 2rem; 
 }
 
 .dashboard-card {
   background-color: #ffffff;
   border-radius: 0.75rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Bayangan lembut */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
   transition: all 0.3s ease;
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 100%; /* Agar card mengisi ruang */
+  height: 100%;
 }
 
 .dashboard-card:hover {
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Efek hover */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); 
 }
 
 .dashboard-card h3 {
   font-size: 1.25rem;
   font-weight: 600;
-  color: #2d3748; /* Warna teks judul */
+  color: #2d3748; 
   margin-bottom: 1rem;
 }
 
 .dashboard-card p {
   font-size: 1rem;
-  color: #4a5568; /* Warna teks deskripsi */
+  color: #4a5568; 
   margin-bottom: 1.25rem;
 }
 
 .dashboard-card .status {
   font-size: 0.875rem;
   font-weight: 500;
-  color: #38a169; /* Warna status */
+  color: #38a169; 
 }
 
 .dashboard-button {
-  background-color: #3182ce; /* Warna tombol */
+  background-color: #3182ce; 
   color: white;
   font-weight: 600;
   padding: 0.75rem 2rem;
@@ -165,18 +163,16 @@ h1 {
 }
 
 .dashboard-button:hover {
-  background-color: #2b6cb0; /* Warna tombol saat hover */
+  background-color: #2b6cb0; 
 }
 
 .dashboard-button:focus {
   outline: none;
-  box-shadow: 0 0 0 2px rgba(66, 153, 225, 0.6); /* Efek fokus */
+  box-shadow: 0 0 0 2px rgba(66, 153, 225, 0.6); 
 }
-/* globals.css atau style.css */
-
 .team-name {
   font-size: 0.875rem;
   font-weight: 600;
-  color: #2b6cb0; /* Warna biru untuk nama tim */
+  color: #2b6cb0; 
   margin-top: 1rem;
 }
