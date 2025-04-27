@@ -1,3 +1,6 @@
+export const dynamic = "force-dynamic";
+
+
 import { NextRequest, NextResponse } from 'next/server';
 import { verifyToken } from '../../../../helpers/jwt';
 import { prisma } from '../../../../../lib/prisma';

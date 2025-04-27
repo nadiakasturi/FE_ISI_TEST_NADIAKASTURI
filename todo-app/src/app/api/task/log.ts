@@ -1,3 +1,6 @@
+export const dynamic = "force-dynamic";
+
+
 import { prisma } from '../../../../lib/prisma';
 
 export const logTaskUpdate = async (userId: number, taskId: number, status: string) => {
