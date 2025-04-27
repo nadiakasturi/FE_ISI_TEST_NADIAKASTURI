@@ -1,15 +1,45 @@
-export const dynamic = "force-dynamic";
-
-
+import { NextRequest, NextResponse } from 'next/server';
+import jwt from 'jsonwebtoken';
 import { prisma } from '../../../../lib/prisma';
 
-export const logTaskUpdate = async (userId: number, taskId: number, status: string) => {
-  await prisma.log.create({
-    data: {
-      action: `User ${userId} updated task ${taskId} status to "${status}"`,
-      userId,
-      entityId: taskId,
-      entity: 'Task',
-    },
-  });
+export const logTaskUpdate = async (req: NextRequest, taskId: number, status: string) => {
+
+  const token = req.headers.get('Authorization')?.split(' ')[1];
+
+  if (!token) {
+    return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+  }
+
+  try {
+  
+    const decoded: any = jwt.verify(token, process.env.JWT_SECRET as string);
+
+    console.log('Decoded token:', decoded);
+
+    
+    const username = decoded.username ?? 'Unknown'; 
+    console.log("Username being used:", username)
+    const userId = decoded.userId;
+
+ 
+    console.log(`Saving log: User ${userId} updated task ${taskId} status to "${status}" with username "${username}"`);
+
+    await prisma.log.create({
+      data: {
+        action: "Test action",
+  userId: 1,
+  entityId: 2,
+  entity: "Task",
+  username: "riki",
+      },
+    });
+
+    console.log("Log successfully created.");
+    return NextResponse.json({ message: 'Log created successfully' });
+
+  } catch (error) {
+ 
+    console.error('Token verification failed:', error);
+    return NextResponse.json({ message: 'Invalid or expired token' }, { status: 401 });
+  }
 };

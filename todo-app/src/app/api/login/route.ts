@@ -22,6 +22,7 @@ export async function POST(req: NextRequest) {
     email: user.email,
     role: user.role,
     teamId: user.teamId,
+    username: user.username,
     exp: Math.floor(Date.now() / 1000) + 60 * 60,
   });
 

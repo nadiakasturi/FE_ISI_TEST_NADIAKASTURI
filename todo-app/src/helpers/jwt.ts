@@ -6,6 +6,7 @@ export interface CustomJwtPayload extends jose.JWTPayload {
   userId: number;
   email: string;
   role: string;
+  username: string;
 }
 
 export const signToken = (payload: CustomJwtPayload) => {

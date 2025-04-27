@@ -1,3 +1,4 @@
+/* globals.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -10,7 +11,6 @@
   box-sizing: border-box;
 }
 
-
 body {
   font-family: 'Inter', sans-serif;
   background-color: #f4f7fc; 
@@ -18,11 +18,33 @@ body {
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-start; 
+  align-items: stretch;
   min-height: 100vh;
-  padding: 0 20px; 
-  margin: 0; 
+  padding: 0;
+  margin: 0;
+}
+
+.app-layout {
+  display: flex;
+  min-height: 100vh; 
+}
+
+.sidebar {
+  width: 250px;  
+  background-color: #4c51bf;
+  color: white;
+  padding: 20px;
+  position: fixed;  
+  height: 100%;
+}
+
+.main-content {
+  margin-left: 250px;  
+  flex-grow: 1;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: #f4f7fc; 
 }
 
 form {
@@ -104,6 +126,68 @@ h1 {
     padding: 25px;
     width: 100%;
   }
+
+  .app-layout {
+    flex-direction: column; 
+  }
+
+  .sidebar {
+    position: relative;
+    width: 100%;
+    height: auto;  
+  }
+
+  .main-content {
+    margin-left: 0; 
+  }
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table th,
+table td {
+  padding: 12px 20px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+table th {
+  background-color: #4c51bf;
+  color: white;
+  font-weight: 600;
+}
+
+table td {
+  background-color: #ffffff;
+  color: #333;
+}
+
+table tr:hover {
+  background-color: #f1f1f1;
+}
+
+table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+
+.overflow-x-auto {
+  overflow-x: auto;
+  margin-top: 1rem;
+}
+
+@media (max-width: 768px) {
+  table th,
+  table td {
+    padding: 8px;
+  }
+  
+  table {
+    font-size: 14px;
+  }
 }
 
 .dashboard-grid {
@@ -170,9 +254,26 @@ h1 {
   outline: none;
   box-shadow: 0 0 0 2px rgba(66, 153, 225, 0.6); 
 }
+
 .team-name {
   font-size: 0.875rem;
   font-weight: 600;
   color: #2b6cb0; 
   margin-top: 1rem;
+}
+
+.auth-layout {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;  
+}
+
+.auth-layout .main-content {
+  width: 100%;
+  max-width: 400px; 
+  padding: 2rem;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
 }
