@@ -62,11 +62,11 @@ export async function POST(req: NextRequest) {
   }
 }
 
-export async function GET(req: Request) {
+export async function GET() {
   try {
     const tasks = await prisma.task.findMany(); 
     return NextResponse.json(tasks, { status: 200 });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ message: 'Gagal mengambil task' }, { status: 500 });
   }
 }

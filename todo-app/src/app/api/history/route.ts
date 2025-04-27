@@ -13,7 +13,7 @@ export async function GET() {
     });
     console.log(logs);
     return new Response(JSON.stringify(logs), { status: 200 });
-  } catch (error) {
+  } catch {
     return new Response('Error fetching history', { status: 500 });
   }
 }
