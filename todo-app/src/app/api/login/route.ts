@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { NextRequest, NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcryptjs';
@@ -20,7 +22,7 @@ export async function POST(req: NextRequest) {
     email: user.email,
     role: user.role,
     teamId: user.teamId,
-    exp: Math.floor(Date.now() / 1000) + 60 * 60, 
+    exp: Math.floor(Date.now() / 1000) + 60 * 60,
   });
 
   console.log('JWT Payload on login:', {
@@ -32,6 +34,6 @@ export async function POST(req: NextRequest) {
 
   return NextResponse.json({
     message: 'Login success',
-    token, 
+    token,
   });
 }
